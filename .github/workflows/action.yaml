@@ -51,7 +51,7 @@ jobs:
        ls -l -h /data
        exit
        #
-       docker exec -it metviewer_1 /bin/bash -c "/METviewer/bin/mv_scorecard.sh /data/score_card.xml"
+       docker exec -i metviewer_1 /bin/bash -c "/METviewer/bin/mv_scorecard.sh /data/score_card.xml"
        ymdh=$(date -u +%Y%m%d%H%M)
        ls -l -h $METVIEWER_DIR
        #cp ./scripts/create_db.sh ./met_out
