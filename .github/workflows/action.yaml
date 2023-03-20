@@ -42,7 +42,7 @@ jobs:
        docker-compose up -d
        docker ps -a
        #
-       docker exec -it metviewer_1 /bin/bash
+       docker exec -i metviewer_1 /bin/bash
        cp /data/mv_mysql.sql /METviewer/sql
        mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;"
        mysql -hmysql_mv -uroot -pmvuser mv_met_out < /METviewer/sql/mv_mysql.sql
