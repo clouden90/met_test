@@ -1,0 +1,38 @@
+name: CI_MET
+
+on:
+  #push:
+  #  branches: [ "test" ]
+  
+jobs:
+  gen_scorecard:
+
+    runs-on: ubuntu-20.04
+        
+    - name: Checkout swan_workflow repo
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+ 
+     - name: run swan workflow     
+      shell: bash
+      run: |
+       # set env
+       [[ -d `pwd`/MySQL ]] &&  sudo rm -rf MySQL
+       [[ -d `pwd`/METviewer ]] &&  sudo rm -rf METviewer
+       mkdir METviewer MySQL
+       export METVIEWER_DATA=`pwd`/met_out
+       export MYSQL_DIR=`pwd`/MySQL
+       export METVIEWER_DIR=`pwd`/METviewer
+       export METVIEWER_DOCKER_IMAGE=dtcenter/metviewer:main_v5.0
+       
+       #
+      [[ -f docker-compose.yml ]] && rm docker-compose.yml
+      cp scripts/docker-compose.yml.tmp docker-compose.yml
+      
+      #
+      sed -i 's@${MYSQL_DIR}@'"$MYSQL_DIR"'@g' ./docker-compose.yml
+      sed -i 's@${METVIEWER_DATA}@'"$METVIEWER_DATA"'@g' ./docker-compose.yml
+      sed -i 's@${METVIEWER_DIR}@'"$METVIEWER_DIR"'@g' ./docker-compose.yml
+      sed -i 's@${METVIEWER_DOCKER_IMAGE}@'"$METVIEWER_DOCKER_IMAGE"'@g' ./docker-compose.yml
+       
