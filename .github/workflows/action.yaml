@@ -43,8 +43,14 @@ jobs:
        docker ps -a
        #
        docker exec -it metviewer_1 /bin/bash
+       cp /data/mv_mysql.sql /METviewer/sql
+       mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;"
+       mysql -hmysql_mv -uroot -pmvuser mv_met_out < /METviewer/sql/mv_mysql.sql
+       chmod +x /METviewer/bin/mv_load.sh
+       /METviewer/bin/mv_load.sh /data/load_met_out.xml
+       ls -l -h /data
        exit
        #
-       cp ./scripts/create_db.sh ./met_out
-       chmod +x ./met_out/create_db.sh
-       docker exec -i metviewer_1 /bin/bash -c "/data/create_db.sh"
+       #cp ./scripts/create_db.sh ./met_out
+       #chmod +x ./met_out/create_db.sh
+       #docker exec -i metviewer_1 /bin/bash -c "/data/create_db.sh"
