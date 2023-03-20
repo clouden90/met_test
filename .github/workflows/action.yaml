@@ -41,12 +41,13 @@ jobs:
        docker-compose up -d
        docker ps -a
        #
-       docker exec -i metviewer_1 bash -c 'pwd; ls -l -h /data'
-       docker exec -i metviewer_1 bash -c 'cp /data/mv_mysql.sql /METviewer/sql; mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;"'
-       docker exec -i metviewer_1 bash -c 'mysql -hmysql_mv -uroot -pmvuser mv_met_out < /METviewer/sql/mv_mysql.sql'
-       docker exec -i metviewer_1 bash -c 'chmod +x /METviewer/bin/mv_load.sh'
-       docker exec -i metviewer_1 bash -c '/METviewer/bin/mv_load.sh /data/load_met_out.xml'
+       docker exec metviewer_1 bash -c 'pwd; ls -l -h /data'
+       docker exec metviewer_1 bash -c 'cp /data/mv_mysql.sql /METviewer/sql' 
+       docker exec metviewer_1 /bin/bash -c 'mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;"'
+       docker exec metviewer_1 bash -c 'mysql -hmysql_mv -uroot -pmvuser mv_met_out < /METviewer/sql/mv_mysql.sql'
+       docker exec metviewer_1 bash -c 'chmod +x /METviewer/bin/mv_load.sh'
+       docker exec metviewer_1 bash -c '/METviewer/bin/mv_load.sh /data/load_met_out.xml'
        #
-       docker exec -i metviewer_1 /bin/bash -c "/METviewer/bin/mv_scorecard.sh /data/score_card.xml"
+       docker exec metviewer_1 /bin/bash -c "/METviewer/bin/mv_scorecard.sh /data/score_card.xml"
        ymdh=$(date -u +%Y%m%d%H%M)
        ls -l -h $METVIEWER_DIR
