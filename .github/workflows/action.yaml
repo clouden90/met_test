@@ -42,6 +42,9 @@ jobs:
        docker-compose up -d
        docker ps -a
        #
+       docker exec -it metviewer_1 /bin/bash
+       exit
+       #
        cp ./scripts/create_db.sh ./met_out
        chmod +x ./met_out/create_db.sh
        docker exec -i metviewer_1 /bin/bash -c "/data/create_db.sh"
