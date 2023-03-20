@@ -8,13 +8,14 @@ jobs:
   gen_scorecard:
 
     runs-on: ubuntu-20.04
-        
+    
+    steps:
     - name: checkout
       uses: actions/checkout@v3
       with:
         submodules: recursive
  
-     - name: run server    
+    - name: run server    
       shell: bash
       run: |
        # set env
@@ -24,19 +25,17 @@ jobs:
        export METVIEWER_DATA=`pwd`/met_out
        export MYSQL_DIR=`pwd`/MySQL
        export METVIEWER_DIR=`pwd`/METviewer
-       export METVIEWER_DOCKER_IMAGE=dtcenter/metviewer:main_v5.0
-       
+       export METVIEWER_DOCKER_IMAGE=dtcenter/metviewer:main_v5.0 
        #
-      [[ -f docker-compose.yml ]] && rm docker-compose.yml
-      cp scripts/docker-compose.yml.tmp docker-compose.yml
+       [[ -f ./docker-compose.yml ]] && rm ./docker-compose.yml
+       cp scripts/docker-compose.yml.tmp ./docker-compose.yml
+       #
+       sed -i 's@${MYSQL_DIR}@'"$MYSQL_DIR"'@g' ./docker-compose.yml
+       sed -i 's@${METVIEWER_DATA}@'"$METVIEWER_DATA"'@g' ./docker-compose.yml
+       sed -i 's@${METVIEWER_DIR}@'"$METVIEWER_DIR"'@g' ./docker-compose.yml
+       sed -i 's@${METVIEWER_DOCKER_IMAGE}@'"$METVIEWER_DOCKER_IMAGE"'@g' ./docker-compose.yml
       
-      #
-      sed -i 's@${MYSQL_DIR}@'"$MYSQL_DIR"'@g' ./docker-compose.yml
-      sed -i 's@${METVIEWER_DATA}@'"$METVIEWER_DATA"'@g' ./docker-compose.yml
-      sed -i 's@${METVIEWER_DIR}@'"$METVIEWER_DIR"'@g' ./docker-compose.yml
-      sed -i 's@${METVIEWER_DOCKER_IMAGE}@'"$METVIEWER_DOCKER_IMAGE"'@g' ./docker-compose.yml
-      
-      #
-      docker-compose down
-      docker-compose up -d
-      docker ps -a
+       #
+       docker-compose down
+       docker-compose up -d
+       docker ps -a
