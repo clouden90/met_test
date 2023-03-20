@@ -42,18 +42,13 @@ jobs:
        docker-compose up -d
        docker ps -a
        #
-       docker exec -i metviewer_1 /bin/bash
+       docker exec -i metviewer_1 sh -c 'cp /data/mv_mysql.sql /METviewer/sql; mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;'
        cp /data/mv_mysql.sql /METviewer/sql
-       mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;"
-       mysql -hmysql_mv -uroot -pmvuser mv_met_out < /METviewer/sql/mv_mysql.sql
-       chmod +x /METviewer/bin/mv_load.sh
-       /METviewer/bin/mv_load.sh /data/load_met_out.xml
-       ls -l -h /data
-       exit
+       #mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;"
+       #mysql -hmysql_mv -uroot -pmvuser mv_met_out < /METviewer/sql/mv_mysql.sql
+       #chmod +x /METviewer/bin/mv_load.sh
+       #/METviewer/bin/mv_load.sh /data/load_met_out.xml
        #
-       docker exec -i metviewer_1 /bin/bash -c "/METviewer/bin/mv_scorecard.sh /data/score_card.xml"
+       #docker exec -i metviewer_1 /bin/bash -c "/METviewer/bin/mv_scorecard.sh /data/score_card.xml"
        ymdh=$(date -u +%Y%m%d%H%M)
        ls -l -h $METVIEWER_DIR
-       #cp ./scripts/create_db.sh ./met_out
-       #chmod +x ./met_out/create_db.sh
-       #docker exec -i metviewer_1 /bin/bash -c "/data/create_db.sh"
