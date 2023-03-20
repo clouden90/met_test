@@ -31,10 +31,10 @@ jobs:
        cp scripts/docker-compose.yml.tmp ./docker-compose.yml
        cp scripts/create_db.sh ./met_out
        #
-       #sed -i 's@${MYSQL_DIR}@'"$MYSQL_DIR"'@g' ./docker-compose.yml
-       #sed -i 's@${METVIEWER_DATA}@'"$METVIEWER_DATA"'@g' ./docker-compose.yml
-       #sed -i 's@${METVIEWER_DIR}@'"$METVIEWER_DIR"'@g' ./docker-compose.yml
-       #sed -i 's@${METVIEWER_DOCKER_IMAGE}@'"$METVIEWER_DOCKER_IMAGE"'@g' ./docker-compose.yml
+       sed -i 's@${MYSQL_DIR}@'"$MYSQL_DIR"'@g' ./docker-compose.yml
+       sed -i 's@${METVIEWER_DATA}@'"$METVIEWER_DATA"'@g' ./docker-compose.yml
+       sed -i 's@${METVIEWER_DIR}@'"$METVIEWER_DIR"'@g' ./docker-compose.yml
+       sed -i 's@${METVIEWER_DOCKER_IMAGE}@'"$METVIEWER_DOCKER_IMAGE"'@g' ./docker-compose.yml
        #
        wget https://my-ufs-inputdata.s3.amazonaws.com/met_out.tar.gz
        tar -zxvf met_out.tar.gz
