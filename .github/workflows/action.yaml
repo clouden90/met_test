@@ -40,6 +40,7 @@ jobs:
        cp scripts/create_db.sh ./met_out/
        cp scripts/score_card.xml ./met_out/
        cp scripts/mv_mysql.sql ./met_out/
+       cp scripts/load_met_out.xml ./met_out/
        #
        docker-compose up -d
        docker ps -a
