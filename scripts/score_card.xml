@@ -34,11 +34,11 @@
 	<plot_fix>
 	  <field name="model">
 	    <val name="FV3_GFS_v16_SUBCONUS_3km"/>
-	    <val name="FV3_RRFS_v1beta_SUBCONUS_3km"/>
+	    <val name="FV3_GFS_v16_SUBCONUS_3km_test_mem000"/>
 	  </field>
 	  <field name="fcst_valid_beg">
             <val name="2019-06-15 00:00:00"/>
-            <val name="2019-06-17 12:00:00"/>
+            <val name="2019-06-17 00:00:00"/>
           </field>
 	  <field name="init_hour">
 	    <val name="00"/>
@@ -114,7 +114,6 @@
 	    <field name="fcst_lead">
 	      <val name="60000:120000:180000:240000" label="Day 1"/>
               <val name="300000:360000:420000:480000" label="Day 2"/>
-              <val name="500000:540000:600000" label="Day 3"/> 
 	    </field>
           </field>
         </columns>

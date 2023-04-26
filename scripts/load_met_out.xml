@@ -25,7 +25,6 @@
 	<load_val>
 		<field name="met_tool">
                         <val>point_stat</val>
-                        <val>grid_stat</val>
 		</field>
 	</load_val>
 
