@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<plot_spec>
+    <connection>
+        <host>mysql_mv:3306</host>
+        <database>mv_met_out</database>
+        <user>root</user>
+        <password>mvuser</password>
+        <management_system>mysql</management_system>
+    </connection>
+    <rscript>/usr/bin/Rscript</rscript>
+    <folders>
+        <r_tmpl>/opt/tomcat/webapps/metviewer/R_tmpl</r_tmpl>
+        <r_work>/opt/tomcat/webapps/metviewer/R_work</r_work>
+        <plots>/data/</plots>
+        <data>/opt/tomcat/webapps/metviewer_output/data</data>
+        <scripts>/opt/tomcat/webapps/metviewer_output/scripts</scripts>
+    </folders>
+    <plot>
+	<view_value>false</view_value>
+	<view_symbol>true</view_symbol>
+	<view_legend>true</view_legend>
+	<stat_flag>EMC</stat_flag>
+	<printSQL>true</printSQL>
+        <stat>DIFF_SIG</stat>
+
+	<left_column_names>
+	  <val></val>
+	  <val></val>
+	  <val></val>		
+        </left_column_names>
+
+        <template>scorecard.R_tmpl</template>
+
+	<plot_fix>
+	  <field name="model">
+	    <val name="FV3_GFS_v16_SUBCONUS_3km"/>
+	    <val name="FV3_RRFS_v1beta_SUBCONUS_3km"/>
+	  </field>
+	  <field name="fcst_valid_beg">
+            <val name="2019-06-15 00:00:00"/>
+            <val name="2019-06-17 12:00:00"/>
+          </field>
+	  <field name="init_hour">
+	    <val name="00"/>
+          </field>
+	</plot_fix>
+
+        <rows>
+	  <field name="stat">
+	    <val name="RMSE"/>
+	    <field name="fcst_var">
+              <val name="HGT" label="Heights"/>
+	      <field name="fcst_lev">
+		  <val name="L0"/>
+              </field>
+	    </field>
+          </field>
+
+          <field name="stat">
+            <val name="RMSE"/>
+            <field name="fcst_var">
+              <val name="TMP" label="Temp"/>
+              <field name="fcst_lev">
+                  <val name="Z2"/>
+              </field>
+            </field>
+          </field>
+
+          <field name="stat">
+            <val name="RMSE"/>
+            <field name="fcst_var">
+              <val name="PRMSL" label="PRMSL"/>
+              <field name="fcst_lev">
+                  <val name="Z0"/>
+              </field>
+            </field>
+          </field>
+
+          <field name="stat">
+            <val name="ME" label="Bias"/>
+            <field name="fcst_var">
+              <val name="HGT" label="Heights"/>
+              <field name="fcst_lev">
+                  <val name="L0"/>
+              </field>
+            </field>
+          </field>
+
+          <field name="stat">
+            <val name="ME" label="Bias"/>
+            <field name="fcst_var">
+              <val name="TMP" label="Temp"/>
+              <field name="fcst_lev">
+                  <val name="Z2"/>
+              </field>
+            </field>
+          </field>
+
+          <field name="stat">
+            <val name="ME" label="Bias"/>
+            <field name="fcst_var">
+              <val name="PRMSL" label="PRMSL"/>
+              <field name="fcst_lev">
+                  <val name="Z0"/>
+              </field>
+            </field>
+          </field>
+
+        </rows>
+
+        <columns>
+          <field name="vx_mask">
+	    <val name="CONUS" label="SUBCONUS"/>
+	    <field name="fcst_lead">
+	      <val name="60000:120000:180000:240000" label="Day 1"/>
+              <val name="300000:360000:420000:480000" label="Day 2"/>
+              <val name="500000:540000:600000" label="Day 3"/> 
+	    </field>
+          </field>
+        </columns>
+
+	<agg_stat>false</agg_stat>
+	<boot_repl>1000</boot_repl>
+	<boot_random_seed>1</boot_random_seed>
+
+	<tmpl>
+	  <data_file>scorecard.data</data_file>
+	  <plot_file>scorecard.png</plot_file>
+	  <title>Scorecard</title>
+        </tmpl>
+    </plot>
+</plot_spec>

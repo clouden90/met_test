@@ -38,15 +38,13 @@ jobs:
        wget https://my-ufs-inputdata.s3.amazonaws.com/met_out.tar.gz
        tar -zxvf met_out.tar.gz
        cp scripts/create_db.sh ./met_out/
+       cp scripts/score_card.xml ./met_out/
+       cp scripts/mv_mysql.sql ./met_out/
        #
        docker-compose up -d
        docker ps -a
        #
-       #docker exec metviewer_1 /bin/bash -c 'mysql -hmysql_mv -uroot -pmvuser -e"create database mv_met_out;"' || true
        sudo bash ./scripts/run_mysql.sh || true
-       docker exec metviewer_1 /bin/bash -c "bash /data/create_db.sh || true"
        #
        docker exec metviewer_1 /bin/bash -c "/METviewer/bin/mv_scorecard.sh /data/score_card.xml"
-       ymdh=$(date -u +%Y%m%d%H%M)
-       echo $ymdh
-       ls -l -h $METVIEWER_DIR
+       ls -l -h $METVIEWER_DATA
